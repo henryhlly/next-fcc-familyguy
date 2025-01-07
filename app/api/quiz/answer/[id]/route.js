@@ -21,9 +21,12 @@ export async function GET(req, { params }) {
 
     const { correct_answer } = question
 
+    // Filters out the current question from the available pool of questions
     const filteredQuestions = questions.data.filter(
       item => item.id !== params.id,
     )
+
+    // Find a suitable index to use for the next question
     const random = Math.floor(Math.random() * filteredQuestions.length)
 
     return NextResponse.json({

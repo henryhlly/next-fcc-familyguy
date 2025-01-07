@@ -19,6 +19,7 @@ export async function GET(req, { params }) {
       return new NextResponse('not found', { status: 404 })
     }
 
+    // removes correct_answer from question variable
     const { correct_answer, ...rest } = question
 
     return NextResponse.json({

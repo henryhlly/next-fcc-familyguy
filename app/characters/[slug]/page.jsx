@@ -8,16 +8,20 @@ Renders a Next.js page component that displays detailed information about a char
 */
 
 import { Container } from '@/components'
-import { getAllCharacters, getCharacterBySlug } from '@/lib/characters'
 import Image from 'next/image'
+import { endpoint } from '@/utils/endpoint'
+import { getAllCharacters, getCharacterBySlug } from '@/lib/characters'
 
 export const dynamicParams = false
 
+// Tell Next.js which routes need to be generated and pre-rendered at build time, in this case it pre-renders all 
 export async function generateStaticParams() {
   const { characters } = await getAllCharacters()
+  // Turn the characters array into a format that Next.js can understand, returning is the order to pre-render
   return characters.map(character => ({ slug: character.slug }))
 }
 
+// params is any parameter values taken from the URL
 export default async function Page({ params }) {
   const { character, character_quotes } = await getCharacterBySlug(params.slug)
 
@@ -28,10 +32,7 @@ export default async function Page({ params }) {
         <ul className="flex gap-1 text-sm">
           {character.occupations.map(item => {
             return (
-              <li
-                key={item}
-                className="p-2 text-gray-300 bg-gray-800 rounded-md"
-              >
+              <li key={item} className="p-2 text-gray-300 bg-gray-800 rounded-md">
                 {item}
               </li>
             )
@@ -42,17 +43,8 @@ export default async function Page({ params }) {
       <ul className="grid gap-2 sm:grid-cols-2">
         {character.images.map(image => {
           return (
-            <li
-              key={image}
-              className="relative flex overflow-hidden bg-gray-900 rounded-xl"
-            >
-              <Image
-                className="transition-all duration-500 hover:scale-110 hover:rotate-2"
-                src={image}
-                alt=""
-                width={760}
-                height={435}
-              />
+            <li key="image" className="relative flex overflow-hidden bg-gray-900 rounded-xl">
+              <Image className="transition-all duration-500 hover:scale-110 hover:rotate-2" src={image} alt="" width={760} height={435} />
             </li>
           )
         })}
@@ -63,10 +55,7 @@ export default async function Page({ params }) {
           <ul className="flex flex-wrap gap-1">
             {character.skills.map(item => {
               return (
-                <li
-                  className="flex justify-center flex-grow px-2 py-1 text-orange-400 rounded-full bg-orange-950"
-                  key={item}
-                >
+                <li className="flex justify-center flex-grow px-2 py-1 text-orange-400 rounded-full bg-orange-950" key={item}>
                   {item}
                 </li>
               )
@@ -80,10 +69,7 @@ export default async function Page({ params }) {
           <ul className="grid gap-5">
             {character_quotes.map((item, idx) => {
               return (
-                <li
-                  className="p-2 italic text-gray-400 border-l-4 border-green-400 rounded-md"
-                  key={item.idx}
-                >
+                <li className="p-2 italic text-gray-400 border-l-4 border-green-400 rounded-md" key={item.idx}>
                   {item.quote}
                 </li>
               )

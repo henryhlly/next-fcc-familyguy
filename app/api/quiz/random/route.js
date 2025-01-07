@@ -9,6 +9,7 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
+    // Find a random question in the quiz json which will produce an index no.
     const random = Math.floor(Math.random() * questions.data.length)
     return NextResponse.json({
       randomQuestion: questions.data[random].id,
