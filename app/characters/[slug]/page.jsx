@@ -12,6 +12,9 @@ import Image from 'next/image'
 import { endpoint } from '@/utils/endpoint'
 import { getAllCharacters, getCharacterBySlug } from '@/lib/characters'
 
+// Dynamic params deals with all segments of page that are not dealt with by generateStaticParmas.
+// When true next.js attempts to fetch corresponding page dynamically when the segment is visited, if false
+// Next.js will return a 404 page when no page is found. Essentially controls how Next.js handles dynamic segments.
 export const dynamicParams = false
 
 // Tell Next.js which routes need to be generated and pre-rendered at build time, in this case it pre-renders all 
